@@ -18,7 +18,8 @@
   "dependencies": {
     "@prisma/client": "^5.12.1",
     "bcryptjs": "^2.4.3",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
   },
   "devDependencies": {
     "prisma": "^5.12.1"

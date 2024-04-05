@@ -1,7 +1,0 @@
-{
-    "rewrites": [
-      { "source": "/api/signin", "destination": "/api/signin.js" },
-      { "source": "/api/signup", "destination": "/api/signup.js" }
-    ]
-  }
-  
