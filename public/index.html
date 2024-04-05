@@ -15,7 +15,8 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
     <!-- Security -->
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-EB5MH5FTf+lqf2We7CntutMtZSHb3+Tqfadmq6m3IQw=' 'sha256-cRaaWdLhqMbLXUNZYlRxx3C+9QUeEh17Kwvc6KsuykA=' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE=' 'sha256-iIuqp/liUgXUIFaG27RITjJtOJLWncYmMDmEnM5Va58=';">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-EB5MH5FTf+lqf2We7CntutMtZSHb3+Tqfadmq6m3IQw=' 'sha256-cRaaWdLhqMbLXUNZYlRxx3C+9QUeEh17Kwvc6KsuykA=' 
+    'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE=' 'sha256-iIuqp/liUgXUIFaG27RITjJtOJLWncYmMDmEnM5Va58=';">
 
     <!-- SEO -->
     <meta property="og:title" content="Solo Blackjack Game">
@@ -88,7 +89,10 @@
             </div>
         </div>
         <div id="game-message" class="game-message"></div>
-        <button id="save-score-btn" class="btn">Save Stats</button>
+        <button id="save-score-btn">Save Stats</button>
+        <button id="download-save-btn">Download Save</button>
+        <input type="file" id="load-game-file" style="display: none;" />
+        <label for="load-game-file" class="btn" id="load-game-button">Load Save</label>
 
     </div>
     <script src="js/saveGame.js"></script>
@@ -137,6 +141,7 @@
                 window.location.href = 'signup.html';
             });
         </script>
+
 
 </body>
 </html>

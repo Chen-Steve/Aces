@@ -14,7 +14,7 @@ body {
     padding: 20px;
     width: 320px;
     margin: 0 auto;
-    margin-top: 5rem;
+    margin-top: 1rem;
     box-shadow: 0 0 10px rgba(83, 105, 142, 0.5);
     animation: colorShift 10s infinite alternate;
     z-index: 10;
@@ -106,13 +106,6 @@ body {
     color: #ffffff; 
 }
 
-.footer {
-    text-align: center;
-    padding: 10px 0;
-    color: #000;
-}
-
-
 .terminal-header {
     background-color: #9b2a2a;
     color: #00FF00;
@@ -186,7 +179,37 @@ body {
 .btn:hover {
     background-color: #acabab;
 }
+/*---------------------SAVE BUTTONS---------------------*/
+#download-save-btn, #load-game-button, #save-score-btn {
+    background-color: #405d27; 
+    color: #EFEFEF;
+    padding: 10px 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    margin: 5px 5px; 
+}
 
+#download-save-btn:hover, #load-game-button:hover, #save-score-btn:hover {
+    background-color: #567f39; 
+    color: #FFFFFF;
+    border-color: #9dd1da;
+}
+
+#download-save-btn:active, #load-game-button:active, #save-score-btn:active {
+    transform: translateY(1px); 
+    background-color: #364d1b;
+}
+
+#load-game-button {
+    display: inline-block;
+    cursor: pointer;
+}
+/*--------------------------------------------------------*/
 .terminal-footer {
     margin-top: 10px;
 }
@@ -267,50 +290,50 @@ strong {
 }
 
 .card1 {
-    background-image: url('../../svg_playing_cards/backs/abstract/abstract_clouds.png');
+    background-image: url('../svg_playing_cards/backs/abstract/abstract_clouds.png');
     /* Set initial position */
     left: 10%;
     top: 20%;
 }
 .card2 {
-    background-image: url('../../svg_playing_cards/backs/abstract/abstract_scene.png');
+    background-image: url('../svg_playing_cards/backs/abstract/abstract_scene.png');
     /* Set initial position */
     left: 30%;
     top: 47%;
 }
 .card3 {
-    background-image: url('../../svg_playing_cards/backs/abstract/abstract.png');
+    background-image: url('../svg_playing_cards/backs/abstract/abstract.png');
     /* Set initial position */
     left: 40%;
     top: 60%;
 }
 .card4 {
-    background-image: url('../../svg_playing_cards/backs/abstract/astronaut.png');
+    background-image: url('../svg_playing_cards/backs/abstract/astronaut.png');
     /* Set initial position */
     left: 34%;
     top: 40%;
 }
 
 .card5 {
-    background-image: url('../../svg_playing_cards/backs/abstract/cars.png');
+    background-image: url('../svg_playing_cards/backs/abstract/cars.png');
     /* Set initial position */
     left: 30%;
     top: 10%;
 }
 .card6 {
-    background-image: url('../../svg_playing_cards/backs/abstract/castle.png');
+    background-image: url('../svg_playing_cards/backs/abstract/castle.png');
     /* Set initial position */
     left: 5%;
     top: 60%;
 }
 .card7 {
-    background-image: url('../../svg_playing_cards/backs/abstract/fish.png');
+    background-image: url('../svg_playing_cards/backs/abstract/fish.png');
     /* Set initial position */
     left: 80%;
     top: 40%;
 }
 .card8 {
-    background-image: url('../../svg_playing_cards/backs/abstract/frog.png');
+    background-image: url('../svg_playing_cards/backs/abstract/frog.png');
     /* Set initial position */
     left: 80%;
     top: 10%;
@@ -353,7 +376,6 @@ strong {
     margin-top: 10px;
 }
 
-
 .footer {
     text-align: center;
     position: fixed;
@@ -384,20 +406,6 @@ strong {
     text-decoration: underline;
 }
 
-#save-score-btn {
-    padding: 10px 15px;
-    margin-top: 10px; 
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#save-score-btn:hover {
-    background-color: #45a049;
-}
-
 .save-confirmation {
     position: fixed;
     bottom: 20px;
@@ -409,4 +417,3 @@ strong {
     border-radius: 5px;
     z-index: 1000;
 }
-
