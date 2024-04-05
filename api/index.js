@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 app.use(express.json());
 
-app.post('/signin', async (req, res) => {
+app.post('/api/signin', async (req, res) => {
     const { email, password } = req.body;
     try {
       const user = await prisma.user.findUnique({ where: { email } });
@@ -21,7 +21,7 @@ app.post('/signin', async (req, res) => {
     }
   });
   
-  app.post('/signup', async (req, res) => {
+  app.post('/api/signup', async (req, res) => {
     const { email, password } = req.body;
     const hashedPassword = bcrypt.hashSync(password, 8);
     try {
