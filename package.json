@@ -1,13 +1,19 @@
 {
-  "name": "blackjack",
+  "name": "aces",
   "version": "1.0.0",
-  "description": "",
+  "description": "A blackjack game built with Vercel serverless functions",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "blackjack",
+    "vercel",
+    "serverless",
+    "node"
+  ],
+  "author": "Steven Chen",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.12.1",
