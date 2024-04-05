@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "vercel-build": "echo hello"
+    "vercel-build": "prisma generate",
+    "build": "prisma generate"
   },
   "keywords": [
     "blackjack",
