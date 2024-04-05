@@ -29,9 +29,13 @@ app.post('/signin', async (req, res) => {
         data: { email, password: hashedPassword },
       });
       res.status(201).json({ user });
-    } catch (error) {
+    } catch (error) { 
       res.status(400).json({ error: error.message });
     }
+  });
+  
+  app.use((req, res, next) => {
+    res.status(404).json({ error: 'Not Found' });
   });
   
   export default app;
