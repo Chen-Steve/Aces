@@ -98,25 +98,59 @@ document.getElementById('load-game-file').addEventListener('change', handleFileU
 
 function handleFileUpload(event) {
     const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            try {
-                const gameState = JSON.parse(event.target.result);
-                BJgame.wins = gameState.wins;
-                BJgame.losses = gameState.losses;
-                BJgame.draws = gameState.draws;
-                BJgame.playerFunds = gameState.funds;
-                // Call a function to update the UI with the loaded game state
-                updateUIWithGameState(gameState);
-            } catch (e) {
-                console.error('Failed to load game state:', e);
-                alert('Failed to load the game state. Please check the file.');
-            }
-        };
-        reader.readAsText(file);
+    if (!file) {
+        alert('No file selected.');
+        return;
     }
+
+    // Check the file type
+    if (file.type !== 'application/json') {
+        alert('Invalid file type. Please upload a JSON file.');
+        return;
+    }
+
+    // Check the file size (e.g., no more than 1MB)
+    const maxSizeInBytes = 1 * 1024 * 1024; // 1MB
+    if (file.size > maxSizeInBytes) {
+        alert('File is too large. Please upload a file smaller than 1MB.');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        try {
+            const gameState = JSON.parse(event.target.result);
+
+            // Validate the structure of gameState
+            if (typeof gameState !== 'object' ||
+                typeof gameState.wins !== 'number' ||
+                typeof gameState.losses !== 'number' ||
+                typeof gameState.draws !== 'number' ||
+                typeof gameState.funds !== 'number') {
+                throw new Error('Invalid game state structure.');
+            }
+
+            // Update the game state
+            BJgame.wins = gameState.wins;
+            BJgame.losses = gameState.losses;
+            BJgame.draws = gameState.draws;
+            BJgame.playerFunds = gameState.funds;
+
+            // Update the UI with the loaded game state
+            updateUIWithGameState(gameState);
+        } catch (e) {
+            console.error('Failed to load game state:', e);
+            alert('Failed to load the game state. Please check the file.');
+        }
+    };
+
+    reader.onerror = function(event) {
+        console.error('File could not be read! Code ' + event.target.error.code);
+    };
+
+    reader.readAsText(file);
 }
+
 
 function showSaveMessage() {
     const message = document.createElement('div');
