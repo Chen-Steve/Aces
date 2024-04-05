@@ -39,13 +39,32 @@ body {
     z-index: 100;
 }
 
-
 #toggleMusicBtn:hover, #toggleMusicBtn:focus {
     background-color: #007760; 
     transform: scale(1.05);
 }
 
 #toggleMusicBtn:active {
+    transform: scale(0.95);
+}
+
+#toggleLoginBtn {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #009578;
+    color: #ffffff;
+    position: fixed;
+    right: 2%;
+    top: 2%;
+    z-index: 100;
+}
+
+#toggleLoginBtn:hover, #toggleLoginBtn:focus {
+    background-color: #007760; 
+    transform: scale(1.05);
+}
+
+#toggleLoginBtn:active {
     transform: scale(0.95);
 }
 
