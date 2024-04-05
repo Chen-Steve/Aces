@@ -1,0 +1,393 @@
+body {
+    font-family: 'Courier New', monospace;
+    background-color: #aa9797;
+    text-align: center;
+    padding: 0px;
+}
+
+.terminal {
+    position: relative;
+    background-color: #90c0c9;
+    color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    padding: 20px;
+    width: 320px;
+    margin: 0 auto;
+    margin-top: 5rem;
+    box-shadow: 0 0 10px rgba(83, 105, 142, 0.5);
+    animation: colorShift 10s infinite alternate;
+    z-index: 10;
+}
+
+@keyframes colorShift {
+    0% { background-color: #9dd1da; }
+    25% { background-color: #93c3cb; }
+    50% { background-color: #89b4bc; }
+    75% { background-color: #7ca4ab; }
+    100% { background-color: #70949a; }
+}
+
+#toggleMusicBtn {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #009578;
+    color: #ffffff;
+    position: fixed;
+    left: 2%;
+    bottom: 2%;
+    z-index: 100;
+}
+
+
+#toggleMusicBtn:hover, #toggleMusicBtn:focus {
+    background-color: #007760; 
+    transform: scale(1.05);
+}
+
+#toggleMusicBtn:active {
+    transform: scale(0.95);
+}
+
+.rules-tab {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #009578;
+    color: #ffffff;
+    position: fixed;
+    left: 2%;
+    top: 2%;
+    z-index: 100;
+}
+
+.rules-content {
+    display: none; 
+    position: fixed;
+    top: 10%;
+    left: 5%;
+    right: 5%; 
+    background-color: #000000;
+    width: 90%;
+    max-width: 400px; 
+    height: 70vh; 
+    overflow-y: auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 101;
+    color: #ffffff; 
+}
+
+.rules-content h2 {
+    margin-top: 0;
+    color: #ffffff
+}
+
+.rules-content ul, .rules-content p, .rules-content ol {
+    color: #ffffff; 
+}
+
+.footer {
+    text-align: center;
+    padding: 10px 0;
+    color: #000;
+}
+
+
+.terminal-header {
+    background-color: #9b2a2a;
+    color: #00FF00;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+}
+
+#login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#login-container input, #login-container button {
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+}
+
+
+.header-icon {
+    margin-right: 10px; 
+    height: 50px; 
+    width: auto; 
+}
+
+.terminal-content {
+    text-align: left;
+    background-color: #000;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.hand {
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #000;
+    border-radius: 3px;
+    color: #00FF00;
+}
+
+.terminal-controls {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.btn {
+    background-color: #f1f1f1;
+    color: #000;
+    border: none;
+    font-size: 0.8em;
+    border-radius: 3px;
+    padding: 5px 6px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn:disabled {
+    background-color: #444;
+    cursor: not-allowed;
+}
+
+.btn:hover {
+    background-color: #acabab;
+}
+
+.terminal-footer {
+    margin-top: 10px;
+}
+
+span {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+strong {
+    color: #196d19;
+}
+
+#hit-button {
+    background-color: gray;
+}
+
+#hit-button:enabled {
+    background-color: #275829; 
+    cursor: pointer;
+}
+
+.card-image {
+    width: 80px; 
+    height: auto; 
+    margin: 5px; 
+}
+
+#funds-container {
+    color: #00FF00;
+    margin: 10px 0;
+}
+
+/* BETTING */
+#betting-container {
+    margin-bottom: 10px;
+}
+
+.bet-input {
+    margin: 0 5px;
+    width: 60px;
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #185918;
+}
+
+#placeBet {
+    background-color: #4CAF50;
+}
+
+#placeBet:disabled {
+    background-color: #444;
+}
+
+/* FLOATING CARDS */
+.floating-cards {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; 
+    overflow: hidden;
+    pointer-events: auto; 
+}
+
+.card {
+    position: absolute;
+    width: 100px; 
+    height: 140px; 
+    background-size: cover;
+    transition: transform 0.5s ease;
+    z-index: 5;
+}
+
+.card.active {
+    z-index: 15; /* Higher z-index for active (dragged) cards */
+}
+
+.card1 {
+    background-image: url('../../svg_playing_cards/backs/abstract/abstract_clouds.png');
+    /* Set initial position */
+    left: 10%;
+    top: 20%;
+}
+.card2 {
+    background-image: url('../../svg_playing_cards/backs/abstract/abstract_scene.png');
+    /* Set initial position */
+    left: 30%;
+    top: 47%;
+}
+.card3 {
+    background-image: url('../../svg_playing_cards/backs/abstract/abstract.png');
+    /* Set initial position */
+    left: 40%;
+    top: 60%;
+}
+.card4 {
+    background-image: url('../../svg_playing_cards/backs/abstract/astronaut.png');
+    /* Set initial position */
+    left: 34%;
+    top: 40%;
+}
+
+.card5 {
+    background-image: url('../../svg_playing_cards/backs/abstract/cars.png');
+    /* Set initial position */
+    left: 30%;
+    top: 10%;
+}
+.card6 {
+    background-image: url('../../svg_playing_cards/backs/abstract/castle.png');
+    /* Set initial position */
+    left: 5%;
+    top: 60%;
+}
+.card7 {
+    background-image: url('../../svg_playing_cards/backs/abstract/fish.png');
+    /* Set initial position */
+    left: 80%;
+    top: 40%;
+}
+.card8 {
+    background-image: url('../../svg_playing_cards/backs/abstract/frog.png');
+    /* Set initial position */
+    left: 80%;
+    top: 10%;
+}
+
+#coin-animation {   
+    width: 16px; 
+    height: 16px; 
+    background-image: url('../images/coin.png'); 
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 95%; 
+    right: 5%;
+    transform: translateY(-50%);
+    animation: spinCoin 0.5s steps(10) infinite;
+}
+
+@keyframes spinCoin {
+    from { background-position: 0px; }
+    to { background-position: -160px; }
+}
+
+#die-animation {
+    width: 16px;
+    height: 16px; 
+    background-image: url('../images/dice.png');
+    background-repeat: no-repeat;
+    
+    animation: spinDice 1.5s steps(10) infinite;
+}
+
+@keyframes spinDice {
+    from { background-position: 0px; }
+    to { background-position: -160px; }
+}
+
+.game-message {
+    color: rgb(43, 50, 109);
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+.footer {
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: #000; 
+    padding: 10px 0; 
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+}
+
+#credits-link {
+    color: #000;
+    text-decoration: none;
+    font-weight: bold; 
+}
+
+#credits-link:hover {
+    text-decoration: underline; 
+}
+
+.github-link {
+    color: #ffffff; 
+    text-decoration: none; 
+}
+
+.github-link:hover {
+    text-decoration: underline;
+}
+
+#save-score-btn {
+    padding: 10px 15px;
+    margin-top: 10px; 
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#save-score-btn:hover {
+    background-color: #45a049;
+}
+
+.save-confirmation {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    background-color: #0a0;
+    color: #fff;
+    border-radius: 5px;
+    z-index: 1000;
+}
+

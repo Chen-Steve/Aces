@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack Game</title>
+    <meta name="description" content="Simple blackjack game, win cool baubles!">
+    <link rel="canonical" href="https://blackjack-steven-chens-projects.vercel.app/">
+    <meta name="theme-color" content="#395e3a">
+
+    <link rel="shortcut icon" href="images/dice.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/game.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/Draggable.min.js"></script>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+    <!-- Security -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-EB5MH5FTf+lqf2We7CntutMtZSHb3+Tqfadmq6m3IQw=' 'sha256-cRaaWdLhqMbLXUNZYlRxx3C+9QUeEh17Kwvc6KsuykA=' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE=';">
+
+    <!-- SEO -->
+    <meta property="og:title" content="Solo Blackjack Game">
+    <meta property="og:description" content="Simple blackjack game, win cool baubles!">
+    <meta property="og:url" content="https://blackjack-steven-chens-projects.vercel.app/">
+    <meta property="og:type" content="website">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="images/dice.ico">
+</head>
+
+<body class="terminal">
+    <audio id="bgMusic" loop>
+        <source src="sound_effects/david-luong_sunshine-of-rio-o-sol-de-rio.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <button id="toggleMusicBtn">Toggle Music</button>
+
+    <div class="floating-cards">
+        <div class="card card1"></div>
+        <div class="card card2"></div>
+        <div class="card card3"></div>
+        <div class="card card4"></div>
+        <div class="card card5"></div>
+        <div class="card card6"></div>
+        <div class="card card7"></div>
+        <div class="card card8"></div>
+        <div id="coin-animation"></div>
+    </div>
+
+    <div class="terminal-header">
+        <img src="images/logo.svg" class="header-icon" alt="logo"/>
+        <h2>Blackjack Game</h2>
+    </div>
+    <div id="game-container">
+        <div id="your-box" class="box">
+            <h2>Your Hand</h2>
+            <div id="yourscore" class="score">0</div>
+        </div>
+        <div id="dealer-box" class="box">
+            <h2>Dealer's Hand</h2>
+            <div id="dealerscore" class="score">0</div>
+        </div>
+    </div>
+    
+    <div class="terminal-controls">
+        <!-- Betting UI -->
+        <div id="betting-container">
+            <span>Funds: <span id="funds">1000</span></span>
+            <div>
+                <label for="betAmount">Bet:</label>
+                <input type="number" id="betAmount" class="bet-input" value="0" min="0">
+                <button id="placeBet" class="btn">Place Bet</button>
+            </div>
+        </div>
+
+        <!-- Existing Game Controls --> 
+        <button id="hit" class="btn" disabled>Hit</button>
+        <button id="stand" class="btn" disabled>Stand</button>
+        <button id="deal" class="btn">Deal</button>
+        <button id="doubleDown" class="btn">Double Down</button>
+    </div>
+    
+    <div class="terminal-footer">
+        <div id="result-container">
+            <p id="command">Let's Play</p>
+            <div id="scoreboard">
+                <span>Wins: <strong id="wins">0</strong></span>
+                <span>Losses: <strong id="losses">0</strong></span>
+                <span>Draws: <strong id="draws">0</strong></span>
+            </div>
+        </div>
+        <div id="game-message" class="game-message"></div>
+        <button id="save-score-btn" class="btn">Save Stats</button>
+
+    </div>
+    <script src="js/saveGame.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/script.js"></script>
+
+    <div id="rules-tab" class="rules-tab">Game Rules</div>
+    <div id="rules-content" class="rules-content">
+        <h2>Gameplay</h2>
+        <ol>
+            <li><strong>Place Bet:</strong> Enter your bet amount and confirm to start the game. Two cards will be dealt to you immediately.</li>
+            <li><strong>Hit:</strong> If you want another card to try and get closer to 21, click 'Hit'. You can hit multiple times as long as your total is below 21.</li>
+            <li><strong>Stand:</strong> Satisfied with your hand? Click 'Stand' and the dealer will play their hand.</li>
+            <li><strong>Double Down:</strong>Only available as your first decision of each round. After receiving your initial two cards, you have the option to double your bet and receive exactly one additional card.</li>
+            <li>At the end of each round, hit <strong>deal</strong> to start again</li>
+        </ol>
+        <h2>Betting and Payouts</h2>
+        <ul>
+            <li>Wins pay 1:1; meaning you win the same amount as your bet.</li>
+            <li>Blackjack (an ace and a ten-value card as your first two cards) pays 3:2.</li>
+            <li>If you lose, you forfeit your bet amount.</li>
+            <li>A draw (or "push") returns your initial bet.</li>
+
+        </ul>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; <span id="current-year"></span><a href="https://github.com/Chen-Steve" target="_blank" class="github-link">Steven Chen</a> | <a href="credits.html" id="credits-link">Credits</a></p>
+    </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
+    <script>
+        document.getElementById('rules-tab').addEventListener('click', function() {
+            var rulesContent = document.getElementById('rules-content');
+            if (rulesContent.style.display === "none" || rulesContent.style.display === "") {
+                rulesContent.style.display = "block";
+            } else {
+                rulesContent.style.display = "none";
+            }
+        });
+        </script>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+:root {
+    --background-color: #2D2D2D;
+    --primary-color: #F4D03F; /* For highlights and accents */
+    --text-color: #EAEAEA; /* Primary text color */
+    --link-color: #F4D03F; /* Color for links */
+    --container-bg: #333333; /* Background color for the content container */
+    --font-family: 'Open Sans', sans-serif; /* Primary font */
+    --accent-color: #E91E63; /* Accent color for hover states */
+}
+
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+.container {
+    padding: 20px;
+    max-width: 960px;
+    margin: 40px auto 0 auto; 
+    background-color: var(--container-bg);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    flex: 1;
+}
+
+h1, h2 {
+    color: var(--primary-color);
+}
+
+h1 {
+    text-align: center;
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #555;
+}
+
+li:hover {
+    background-color: #444;
+    cursor: pointer;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover, a:focus {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    width: 100%;
+    border-radius: 0 0 8px 8px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 20px auto;
+        padding: 0 15px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 10px auto;
+        padding: 0 10px;
+    }
+
+    h1, h2 {
+        font-size: 1.2em;
+    }
+}

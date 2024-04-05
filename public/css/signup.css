@@ -1,0 +1,76 @@
+body {
+    font-family: 'Courier New', monospace;
+    background-color: #aa9797;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+form#signUpForm {
+    background-color: #90c0c9;
+    color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(83, 105, 142, 0.5);
+    width: 320px;
+    animation: colorShift 10s infinite alternate;
+}
+
+form#signInForm {
+    background-color: #90c0c9;
+    color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(83, 105, 142, 0.5);
+    width: 320px;
+    animation: colorShift 10s infinite alternate;
+}
+
+input[type="email"], input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    background-color: #ffffff;
+    color: #000;
+}
+
+button[type="submit"] {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #009578;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    font-family: 'Courier New', monospace;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover, button[type="submit"]:focus {
+    background-color: #007760;
+}
+
+/* LOGIN BUTTON  */
+button#loginButton {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #f2a30f; 
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 10px;
+    font-family: 'Courier New', monospace;
+    transition: background-color 0.3s;
+}
+
+button#loginButton:hover, button#loginButton:focus {
+    background-color: #c8810b;
+}
