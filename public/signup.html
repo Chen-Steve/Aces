@@ -7,8 +7,8 @@
 </head>
 <body>
     <form id="signUpForm" action="index.html">
-        <input type="email" id="email" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
+        <input type="email" id="email" name="email" placeholder="Email" autocomplete="email" required>
+        <input type="password" id="password" name="password" placeholder="Password" autocomplete="new-password" required>
         <button type="submit">Sign Up</button>
         <button id="loginButton" onclick="location.href='signin.html'">Login</button>
     </form>
