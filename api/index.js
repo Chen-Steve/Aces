@@ -34,7 +34,7 @@ app.post('/signin', async (req, res) => {
     }
   });
   
-  app.use((res) => {
+  app.use((req, res) => {
     res.status(404).json({ error: 'Not Found' });
   });
 
