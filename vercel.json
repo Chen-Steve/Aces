@@ -1,12 +1,8 @@
 {
+    "version": 2,
     "functions": {
-      "api/signin.js": {
-        "memory": 1024,
-        "maxDuration": 15
-      },
-      "api/signup.js": {
-        "memory": 1024,
-        "maxDuration": 15
+      "api/*.js": {
+        "runtime": "nodejs18.8"
       }
     }
   }
