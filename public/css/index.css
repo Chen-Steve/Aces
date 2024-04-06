@@ -419,37 +419,46 @@ strong {
 }
 
 #profileSection {
-    display: none; /* Start hidden */
+    display: none;
     position: fixed;
-    right: 2%;
-    top: 2%;
-    z-index: 100;
-    background-color: #90c0c9; /* Matching the terminal's background color */
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(83, 105, 142, 0.5);
+    right: 20px; 
+    top: 20px;
+    z-index: 1000;
+    background-color: #90c0c9; 
+    padding: 15px; 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+    max-width: 300px; 
+    font-size: 1em; 
 }
 
 #profileUsername {
-    margin-right: 15px;
+    margin-right: 20px;
     font-weight: bold;
-    font-family: 'Courier New', monospace;
-    text-align: left;
-    flex-grow: 1; /* Ensures the button stays to the right */
+    color: #ffffff; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
 }
 
 #signOutButton {
-    padding: 10px;
-    background-color: #9b2a2a; /* Using the header's background for consistency */
+    padding: 10px 15px; 
+    background-color: #9b2a2a; 
     color: #ffffff;
-    border: none;
-    border-radius: 5px;
+    border: 2px solid transparent; 
+    border-radius: 8px; 
     cursor: pointer;
     font-family: 'Courier New', monospace;
-    transition: background-color 0.3s ease-in-out;
-    font-size: 0.8em;
+    transition: all 0.3s ease-in-out; 
+    letter-spacing: 1px; 
 }
 
-#signOutButton:hover {
-    background-color: #ac3b3b; /* A lighter shade for hover */
+#signOutButton:hover, #signOutButton:focus {
+    background-color: #ac3b3b;
+    border-color: #ffffff; 
+    transform: translateY(-2px); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
 }
