@@ -15,8 +15,8 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
     <!-- Security -->
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-EB5MH5FTf+lqf2We7CntutMtZSHb3+Tqfadmq6m3IQw=' 'sha256-cRaaWdLhqMbLXUNZYlRxx3C+9QUeEh17Kwvc6KsuykA=' 
-    'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE=' 'sha256-iIuqp/liUgXUIFaG27RITjJtOJLWncYmMDmEnM5Va58=' 'sha256-ba2nHmIGwzajksk7BigaZDQGeGZjqLG1ASQ8Zm3ytdo=';">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-cFfujKA6gVrsBb9TvCeRv0bBxK/3RunX6xXtsta2JNs=' 'sha256-zHRNxlq30FUrRJbEp2YzSK+joCWsF4MLhVGR59lXrNE=' 
+    'sha256-UEoYn3M7WAODjJa8ca8a6Euqj0TFopnLefBWtDUIKgM=' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE=' 'sha256-KOz1XjX2TVpc+9SVFHFZBu+P0fKB0Ko5/UaoiK+jSdQ=';">
 
     <!-- SEO -->
     <meta property="og:title" content="Solo Blackjack Game">
@@ -129,47 +129,48 @@
         <p>&copy; <span id="current-year"></span><a href="https://github.com/Chen-Steve" target="_blank" class="github-link">Steven Chen</a> | <a href="credits.html" id="credits-link">Credits</a></p>
     </footer>
 
-    <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+<script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
 </script>
-    <script>
-        document.getElementById('rules-tab').addEventListener('click', function() {
-            var rulesContent = document.getElementById('rules-content');
-            if (rulesContent.style.display === "none" || rulesContent.style.display === "") {
-                rulesContent.style.display = "block";
-            } else {
-                rulesContent.style.display = "none";
-            }
-        });
-        </script>
-        <script>
-            document.getElementById('toggleLoginBtn').addEventListener('click', function() {
-                window.location.href = 'signup.html';
-            });
-        </script>
 
-        <script>
-            // Assuming the signIn and signUp functions set the username in local storage
-            function updateProfile() {
-                const username = localStorage.getItem('username');
-            if (username) {
-                document.getElementById('profileSection').style.display = 'flex'; // Show profileSection
-                document.getElementById('profileUsername').textContent = username; // Set username
-                document.getElementById('toggleLoginBtn').style.display = 'none'; // Hide login button
-            }
-            }
+<script>
+    document.getElementById('rules-tab').addEventListener('click', function() {
+        var rulesContent = document.getElementById('rules-content');
+        if (rulesContent.style.display === "none" || rulesContent.style.display === "") {
+            rulesContent.style.display = "block";
+        } else {
+            rulesContent.style.display = "none";
+        }
+    });
+</script>
+    
+<script>
+    document.getElementById('toggleLoginBtn').addEventListener('click', function() {
+        window.location.href = 'signup.html';
+    });
+</script>
 
-          
-            document.getElementById('signOutButton').addEventListener('click', function() {
-                localStorage.clear();
-                document.getElementById('toggleLoginBtn').style.display = 'block'; // Re-show login button
-                document.getElementById('profileSection').style.display = 'none'; // Hide profile section
-                window.location.href = 'signin.html'; // Redirect to sign-in page
-            });
-          
-            updateProfile(); // Update profile on page load
-          </script>
-
-
+<script>
+    // Function to update UI based on sign-in status
+    function updateUIForSignedInUser() {
+      const username = localStorage.getItem('username');
+      if (username) {
+        document.getElementById('profileUsername').textContent = username; // Update username display
+        document.getElementById('profileSection').style.display = 'flex'; // Show profile section
+        document.getElementById('toggleLoginBtn').style.display = 'none'; // Hide login button
+      }
+    }
+  
+    document.getElementById('signOutButton').addEventListener('click', function() {
+      localStorage.clear(); // Clear user information
+      document.getElementById('profileSection').style.display = 'none'; // Hide profile section
+      document.getElementById('toggleLoginBtn').style.display = 'block'; // Show login button
+      window.location.href = 'signin.html'; // Optionally redirect to sign-in page
+    });
+  
+    // Update UI when the page loads
+    document.addEventListener('DOMContentLoaded', updateUIForSignedInUser);
+</script>
+  
 </body>
 </html>
