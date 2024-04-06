@@ -419,8 +419,8 @@ strong {
 }
 
 #profileSection {
-    display: none;
     position: fixed;
+    justify-content: space-between; /* Ensures items are spaced out to the extremes of the container */
     right: 2%; 
     top: 2%;
     z-index: 200; 
@@ -436,6 +436,8 @@ strong {
 #profileUsername {
     margin-right: 15px;
     font-weight: bold;
+    flex-grow: 1;
+    text-align: center;
 }
 
 #signOutButton {
