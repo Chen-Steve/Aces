@@ -421,44 +421,32 @@ strong {
 #profileSection {
     display: none;
     position: fixed;
-    right: 20px; 
-    top: 20px;
-    z-index: 1000;
-    background-color: #90c0c9; 
-    padding: 15px; 
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center; 
-    justify-content: space-between; 
-    max-width: 300px; 
-    font-size: 1em; 
+    right: 2%; 
+    top: 2%;
+    z-index: 200; 
+    background-color: #009578; 
+    color: #ffffff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3); 
+    font-family: 'Courier New', monospace; 
+    font-size: 0.9em; 
+    transition: all 0.3s ease;
 }
 
 #profileUsername {
-    margin-right: 20px;
+    margin-right: 15px;
     font-weight: bold;
-    color: #ffffff; 
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
 }
 
 #signOutButton {
-    padding: 10px 15px; 
-    background-color: #9b2a2a; 
-    color: #ffffff;
-    border: 2px solid transparent; 
-    border-radius: 8px; 
-    cursor: pointer;
-    font-family: 'Courier New', monospace;
-    transition: all 0.3s ease-in-out; 
-    letter-spacing: 1px; 
+    padding: 8px 12px; 
+    color: white;
+    border-radius: 6px; 
+    background-color: #009578; 
+    cursor: pointer; 
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease; 
+    font-size: 0.8em; 
 }
 
-#signOutButton:hover, #signOutButton:focus {
-    background-color: #ac3b3b;
-    border-color: #ffffff; 
-    transform: translateY(-2px); 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
-}
+
+
