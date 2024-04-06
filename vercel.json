@@ -2,6 +2,7 @@
     "env": {
       "DATABASE_URL": "@database_url"
     },
+    "builds": [{ "src": "index.js", "use": "@vercel/node" }],
     "routes": [
       {
         "src": "/api/(.*)",

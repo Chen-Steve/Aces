@@ -7,10 +7,6 @@ const prisma = new PrismaClient();
 
 app.use(express.json());
 
-app.get('/api/index', (req, res) => {
-  res.status(200).send('Hello World!');
-});
-
 app.post('/api/signin', async (req, res) => {
     const { email, password } = req.body;
     try {
