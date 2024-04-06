@@ -25,7 +25,7 @@ app.post('/api/signin', async (req, res) => {
   app.post('/api/signup', async (req, res) => {
     const { email, password } = req.body;
     const hashedPassword = bcrypt.hashSync(password, 8);
-
+  
     // Generate a random username
     const username = uniqueNamesGenerator({
       dictionaries: [adjectives, colors, animals],
@@ -33,16 +33,18 @@ app.post('/api/signin', async (req, res) => {
       separator: '',
       length: 1, 
     });
-
+  
     try {
+      // Include the username in the data to be saved
       const user = await prisma.user.create({
-        data: { email, password: hashedPassword },
+        data: { email, password: hashedPassword, username },
       });
       res.status(201).json({ user });
     } catch (error) { 
       res.status(400).json({ error: error.message });
     }
   });
+  
   
   app.get('/api/index', (req, res) => {
     res.json({ message: "Welcome to the API" });
