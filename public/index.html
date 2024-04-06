@@ -16,7 +16,7 @@
 
     <!-- Security -->
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-cFfujKA6gVrsBb9TvCeRv0bBxK/3RunX6xXtsta2JNs=' 'sha256-zHRNxlq30FUrRJbEp2YzSK+joCWsF4MLhVGR59lXrNE=' 
-    'sha256-UEoYn3M7WAODjJa8ca8a6Euqj0TFopnLefBWtDUIKgM=' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE=' 'sha256-KOz1XjX2TVpc+9SVFHFZBu+P0fKB0Ko5/UaoiK+jSdQ=';">
+    'sha256-UEoYn3M7WAODjJa8ca8a6Euqj0TFopnLefBWtDUIKgM=' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE=' 'sha256-JrLWNWUxM+PE07j/gacUw2Qtc5y2jiZXtZ3fGYOTRUM=';">
 
     <!-- SEO -->
     <meta property="og:title" content="Solo Blackjack Game">
@@ -151,26 +151,55 @@
 </script>
 
 <script>
-    // Function to update UI based on sign-in status
-    function updateUIForSignedInUser() {
-      const username = localStorage.getItem('username');
+    // Assuming you have this function already
+    function updateUIForSignedInUser(username) {
       if (username) {
         document.getElementById('profileUsername').textContent = username; // Update username display
         document.getElementById('profileSection').style.display = 'flex'; // Show profile section
         document.getElementById('toggleLoginBtn').style.display = 'none'; // Hide login button
+      } else {
+        document.getElementById('profileSection').style.display = 'none'; // Hide profile section if not signed in
+        document.getElementById('toggleLoginBtn').style.display = 'block'; // Show login button
+      }
+    }
+  
+    async function fetchUserInfo() {
+      const token = localStorage.getItem('jwt');
+      if (!token) {
+        console.log('No token found');
+        updateUIForSignedInUser(null); // Update UI for not signed in user
+        return;
+      }
+  
+      try {
+        const response = await fetch('https://aces-nu.vercel.app/api/user', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+  
+        if (response.ok) {
+          const { username } = await response.json();
+          updateUIForSignedInUser(username); // Update UI with fetched username
+        } else {
+          console.error('Failed to fetch user info');
+          updateUIForSignedInUser(null); // Handle user not found or token invalid
+        }
+      } catch (error) {
+        console.error('Error fetching user info:', error);
       }
     }
   
     document.getElementById('signOutButton').addEventListener('click', function() {
-      localStorage.clear(); // Clear user information
-      document.getElementById('profileSection').style.display = 'none'; // Hide profile section
-      document.getElementById('toggleLoginBtn').style.display = 'block'; // Show login button
-      window.location.href = 'signin.html'; // Optionally redirect to sign-in page
+      localStorage.removeItem('jwt'); // Better to remove just the token
+      updateUIForSignedInUser(null); // Update UI for not signed in user
+      window.location.href = 'signin.html'; // Redirect to sign-in page
     });
   
-    // Update UI when the page loads
-    document.addEventListener('DOMContentLoaded', updateUIForSignedInUser);
-</script>
+    // Fetch user info on page load
+    document.addEventListener('DOMContentLoaded', fetchUserInfo);
+  </script>  
   
 </body>
 </html>
