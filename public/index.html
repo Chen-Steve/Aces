@@ -16,7 +16,7 @@
 
     <!-- Security -->
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-EB5MH5FTf+lqf2We7CntutMtZSHb3+Tqfadmq6m3IQw=' 'sha256-cRaaWdLhqMbLXUNZYlRxx3C+9QUeEh17Kwvc6KsuykA=' 
-    'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE=' 'sha256-iIuqp/liUgXUIFaG27RITjJtOJLWncYmMDmEnM5Va58=';">
+    'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE=' 'sha256-iIuqp/liUgXUIFaG27RITjJtOJLWncYmMDmEnM5Va58=' 'sha256-ba2nHmIGwzajksk7BigaZDQGeGZjqLG1ASQ8Zm3ytdo=';">
 
     <!-- SEO -->
     <meta property="og:title" content="Solo Blackjack Game">
@@ -118,6 +118,12 @@
 
         </ul>
     </div>
+    <!-- Profile Section -->
+    <div id="profileSection">
+        <span id="profileUsername"></span>
+        <button id="signOutButton">Sign Out</button>
+    </div>
+
 
     <footer class="footer">
         <p>&copy; <span id="current-year"></span><a href="https://github.com/Chen-Steve" target="_blank" class="github-link">Steven Chen</a> | <a href="credits.html" id="credits-link">Credits</a></p>
@@ -141,6 +147,28 @@
                 window.location.href = 'signup.html';
             });
         </script>
+
+        <script>
+            // Assuming the signIn and signUp functions set the username in local storage
+            function updateProfile() {
+                const username = localStorage.getItem('username');
+            if (username) {
+                document.getElementById('profileSection').style.display = 'flex'; // Show profileSection
+                document.getElementById('profileUsername').textContent = username; // Set username
+                document.getElementById('toggleLoginBtn').style.display = 'none'; // Hide login button
+            }
+            }
+
+          
+            document.getElementById('signOutButton').addEventListener('click', function() {
+                localStorage.clear();
+                document.getElementById('toggleLoginBtn').style.display = 'block'; // Re-show login button
+                document.getElementById('profileSection').style.display = 'none'; // Hide profile section
+                window.location.href = 'signin.html'; // Redirect to sign-in page
+            });
+          
+            updateProfile(); // Update profile on page load
+          </script>
 
 
 </body>

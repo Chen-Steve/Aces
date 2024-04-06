@@ -417,3 +417,39 @@ strong {
     border-radius: 5px;
     z-index: 1000;
 }
+
+#profileSection {
+    display: none; /* Start hidden */
+    position: fixed;
+    right: 2%;
+    top: 2%;
+    z-index: 100;
+    background-color: #90c0c9; /* Matching the terminal's background color */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(83, 105, 142, 0.5);
+}
+
+#profileUsername {
+    margin-right: 15px;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    text-align: left;
+    flex-grow: 1; /* Ensures the button stays to the right */
+}
+
+#signOutButton {
+    padding: 10px;
+    background-color: #9b2a2a; /* Using the header's background for consistency */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    transition: background-color 0.3s ease-in-out;
+    font-size: 0.8em;
+}
+
+#signOutButton:hover {
+    background-color: #ac3b3b; /* A lighter shade for hover */
+}

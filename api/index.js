@@ -1,6 +1,7 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 
 const app = express();
 const prisma = new PrismaClient();
@@ -24,6 +25,15 @@ app.post('/api/signin', async (req, res) => {
   app.post('/api/signup', async (req, res) => {
     const { email, password } = req.body;
     const hashedPassword = bcrypt.hashSync(password, 8);
+
+    // Generate a random username
+    const username = uniqueNamesGenerator({
+      dictionaries: [adjectives, colors, animals],
+      style: 'capital', 
+      separator: '',
+      length: 1, 
+    });
+
     try {
       const user = await prisma.user.create({
         data: { email, password: hashedPassword },
