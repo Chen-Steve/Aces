@@ -50,6 +50,7 @@ function showSaveMessage() {
   const message = document.createElement("div");
   message.textContent = "Game state automatically saved!";
   message.classList.add("save-message");
+  message.style.color = "black";
   document.body.appendChild(message);
   setTimeout(() => document.body.removeChild(message), 2000);
 }
