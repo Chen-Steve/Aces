@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadGameState();
 });
 
-function saveGameState() {
+async function saveGameState() {
   const gameState = {
     wins: BJgame.wins,
     losses: BJgame.losses,
@@ -43,24 +43,24 @@ function saveGameState() {
     funds: BJgame.playerFunds,
   };
 
-  try {
-    localStorage.setItem("BJgameState", JSON.stringify(gameState));
-    console.log("Game state saved:", gameState);
-  } catch (e) {
-    console.error("Failed to save game state:", e);
+  const token = localStorage.getItem('jwt');
+  if (!token) {
+    console.error('No JWT token found. Please sign in.');
+    return;
   }
-}
 
-function loadGameState() {
   try {
-    const savedGameState = localStorage.getItem("BJgameState");
-    if (savedGameState) {
-      const gameState = JSON.parse(savedGameState);
-      updateUIWithGameState(gameState);
-      console.log("Game state loaded:", gameState);
-    }
+    await fetch('https://aces-nu.vercel.app/api/updateStats', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(gameState),
+    });
+    console.log('Game state saved to server:', gameState);
   } catch (e) {
-    console.error("Failed to load game state:", e);
+    console.error('Failed to save game state to server:', e);
   }
 }
 

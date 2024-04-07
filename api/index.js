@@ -32,7 +32,6 @@ app.post('/api/signin', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
   
   app.post('/api/signup', async (req, res) => {
     const { email, password } = req.body;
@@ -70,11 +69,32 @@ app.post('/api/signin', async (req, res) => {
     });
   };
 
-  app.get('/api/user', verifyToken, (req, res) => {
-    // Since the verifyToken middleware adds the decoded token to req.user, 
-    // you can use that information here.
-    const { email, username } = req.user;
-    res.json({ email, username });
+  app.get('/api/user', verifyToken, async (req, res) => {
+    const { email } = req.user;
+    try {
+      const user = await prisma.user.findUnique({ where: { email }, select: { email: true, username: true, wins: true, losses: true, draws: true, funds: true } });
+      if (user) {
+        res.json(user);
+      } else {
+        res.status(404).json({ error: 'User not found' });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.post('/api/updateStats', verifyToken, async (req, res) => {
+    const { wins, losses, draws, funds } = req.body;
+    const { email } = req.user;
+    try {
+      const user = await prisma.user.update({
+        where: { email },
+        data: { wins, losses, draws, funds },
+      });
+      res.json({ message: 'Stats updated successfully', user });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   });
   
   app.get('/api/index', (req, res) => {
