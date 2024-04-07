@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Set up an interval to save the game state automatically every minute
-  setInterval(saveGameState, 60000); // 60000 milliseconds = 1 minute
+  setInterval(saveGameState, 180000); // 60000 milliseconds = 1 minute
 });
 
 async function saveGameState() {
