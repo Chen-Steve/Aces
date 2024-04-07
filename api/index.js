@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'your_default_secret'; // Fallback secret for development
 
 const app = express();
 const prisma = new PrismaClient();
@@ -16,93 +16,86 @@ app.post('/api/signin', async (req, res) => {
   try {
     const user = await prisma.user.findUnique({ where: { email } });
     if (user && bcrypt.compareSync(password, user.password)) {
-      // Generate a JWT token
       const token = jwt.sign(
         { email: user.email, username: user.username },
         JWT_SECRET,
         { expiresIn: '24h' }
       );
-
-      // Send the token to the client
       res.status(200).json({ token, message: 'Successfully signed in!' });
     } else {
       res.status(401).json({ error: 'Email or password is incorrect' });
     }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: 'An internal error occurred' });
   }
 });
-  
-  app.post('/api/signup', async (req, res) => {
-    const { email, password } = req.body;
-    const hashedPassword = bcrypt.hashSync(password, 8);
-  
-    // Generate a random username
-    const username = uniqueNamesGenerator({
-      dictionaries: [adjectives, colors, animals],
-      style: 'capital', 
-      separator: '',
-      length: 1, 
+
+app.post('/api/signup', async (req, res) => {
+  const { email, password } = req.body;
+  const hashedPassword = bcrypt.hashSync(password, 8);
+  const username = uniqueNamesGenerator({
+    dictionaries: [adjectives, colors, animals],
+    style: 'capital',
+    separator: '',
+    length: 1,
+  });
+
+  try {
+    const user = await prisma.user.create({
+      data: { email, password: hashedPassword, username },
     });
-  
-    try {
-      // Include the username in the data to be saved
-      const user = await prisma.user.create({
-        data: { email, password: hashedPassword, username },
-      });
-      res.status(201).json({ user });
-    } catch (error) { 
-      res.status(400).json({ error: error.message });
-    }
+    res.status(201).json({ user });
+  } catch (error) {
+    res.status(400).json({ error: 'Unable to create user' });
+  }
+});
+
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader?.split(' ')[1];
+
+  if (!token) return res.sendStatus(401);
+
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    if (err) return res.sendStatus(403);
+    req.user = decoded;
+    next();
   });
-  
-  const verifyToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-    
-    if (!token) return res.sendStatus(401); // No token found
-    
-    jwt.verify(token, JWT_SECRET, (err, decoded) => {
-      if (err) return res.sendStatus(403); // Token is not valid
-      req.user = decoded; // Add the decoded user to the request object
-      next(); // Proceed to the next middleware or route handler
+};
+
+app.get('/api/user', verifyToken, async (req, res) => {
+  const { email } = req.user;
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email },
+      select: { email: true, username: true, wins: true, losses: true, draws: true, funds: true }
     });
-  };
+    user ? res.json(user) : res.status(404).json({ error: 'User not found' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch user info' });
+  }
+});
 
-  app.get('/api/user', verifyToken, async (req, res) => {
-    const { email } = req.user;
-    try {
-      const user = await prisma.user.findUnique({ where: { email }, select: { email: true, username: true, wins: true, losses: true, draws: true, funds: true } });
-      if (user) {
-        res.json(user);
-      } else {
-        res.status(404).json({ error: 'User not found' });
-      }
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  });
+app.post('/api/updateStats', verifyToken, async (req, res) => {
+  const { email } = req.user;
+  const { wins, losses, draws, funds } = req.body;
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { email },
+      data: { wins, losses, draws, funds },
+    });
+    res.json({ message: 'Stats updated successfully', user: updatedUser });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update stats' });
+  }
+});
 
-  app.post('/api/updateStats', verifyToken, async (req, res) => {
-    const { wins, losses, draws, funds } = req.body;
-    const { email } = req.user;
-    try {
-      const user = await prisma.user.update({
-        where: { email },
-        data: { wins, losses, draws, funds },
-      });
-      res.json({ message: 'Stats updated successfully', user });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  });
-  
-  app.get('/api/index', (req, res) => {
-    res.json({ message: "Welcome to the API" });
-  });
+app.get('/api/index', (req, res) => {
+  res.json({ message: "Welcome to the API" });
+});
 
-  app.use((req, res) => {
-    res.status(404).json({ error: 'Not Found' });
-  });
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not Found' });
+});
 
-  export default app;
+export default app;
