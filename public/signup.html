@@ -13,36 +13,50 @@
         <button type="submit">Sign Up</button>
         <button id="loginButton" type="button" onclick="location.href='signin.html'">Login</button>
     </form>
+    <div id="loadingScreen" class="loading-screen" style="display:none;">
+      <div class="loading-content">
+          <div class="spinner"></div>
+          <p>Loading...</p>
+      </div>
+    </div>
 
     <script>
         document.getElementById('signUpForm').addEventListener('submit', async function(event) {
-  event.preventDefault();
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
 
-  try {
-    const response = await fetch('https://aces-nu.vercel.app/api/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
+            // Show the loading screen
+            document.getElementById('loadingScreen').style.display = 'flex';
 
-    if (response.ok) {
-      const data = await response.json();
-      // Store the username in local storage
-      localStorage.setItem('username', data.user.username);
-      alert('Signup successful!');
-      window.location.href = 'index.html';
-    } else {
-      alert('Signup failed. Please try again.');
-    }
-  } catch (error) {
-    console.error('An error occurred:', error);
-  }
-});
+            try {
+                const response = await fetch('https://aces-nu.vercel.app/api/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
 
+                if (response.ok) {
+                    const data = await response.json();
+                    // Optional: Store additional data if needed
+                    // localStorage.setItem('username', data.user.username);
+                    // Hide the loading screen
+                    document.getElementById('loadingScreen').style.display = 'none';
+                    // Redirect or further process the successful signup
+                    window.location.href = 'index.html'; // or show a success message
+                } else {
+                    // Hide the loading screen and show error
+                    document.getElementById('loadingScreen').style.display = 'none';
+                    alert('Signup failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('An error occurred:', error);
+                document.getElementById('loadingScreen').style.display = 'none';
+                alert('An error occurred. Please try again.');
+            }
+        });
     </script>
 </body>
 </html>

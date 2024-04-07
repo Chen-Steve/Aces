@@ -15,33 +15,51 @@
             required>
         <button type="submit">Login</button>
     </form>
-
-    <script>
-        document.getElementById('signInForm').addEventListener('submit', async function (event) {
-            event.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            const response = await fetch('https://aces-nu.vercel.app/api/signin', {
+    <div id="loadingScreen" class="loading-screen" style="display:none;">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+    </div>
+    
+<script>
+    document.getElementById('signInForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+    
+        // Show the loading screen
+        document.getElementById('loadingScreen').style.display = 'flex';
+    
+        try {
+            const response = await fetch('https://your-backend-url/api/signin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email, password }),
             });
-
+    
             if (response.ok) {
+                // Hide the loading screen
+                document.getElementById('loadingScreen').style.display = 'none';
+                
                 const { token } = await response.json();
-                // Store the token instead of the username
                 localStorage.setItem('jwt', token);
-                alert('Signin successful!');
-                window.location.href = 'index.html';
+                // Redirect or update UI as needed
             } else {
+                // Hide the loading screen and show error
+                document.getElementById('loadingScreen').style.display = 'none';
                 alert('Signin failed. Please check your email and password.');
             }
-        });
-    </script>
+        } catch (error) {
+            console.error('Signin failed:', error);
+            document.getElementById('loadingScreen').style.display = 'none';
+            alert('An error occurred. Please try again.');
+        }
+    });
 
+</script>
 </body>
 
 </html>
