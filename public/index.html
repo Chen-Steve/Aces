@@ -14,7 +14,7 @@
 
     <!-- Security -->
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-cFfujKA6gVrsBb9TvCeRv0bBxK/3RunX6xXtsta2JNs=' 'sha256-zHRNxlq30FUrRJbEp2YzSK+joCWsF4MLhVGR59lXrNE=' 
-    'sha256-UEoYn3M7WAODjJa8ca8a6Euqj0TFopnLefBWtDUIKgM=' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE=' 'sha256-t4GumjRo1b+k/unChiFvMUIPK7jfWiKm7FgQHbigksA=';">
+    'sha256-UEoYn3M7WAODjJa8ca8a6Euqj0TFopnLefBWtDUIKgM=' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE=' 'sha256-bnpDgh3PWRLzW7hyZ4jnaGvRPkl6G2bKAkYcUNZNYtw=';">
 
     <!-- SEO -->
     <meta property="og:title" content="Solo Blackjack Game">
@@ -149,17 +149,16 @@
 </script>
 
 <script>
-    // Ensure this script includes logic to update UI with user stats fetched from the server
     document.addEventListener('DOMContentLoaded', fetchUserInfo);
-
+    
     async function fetchUserInfo() {
         const token = localStorage.getItem('jwt');
         if (!token) {
             console.log('No token found');
-            // Update UI to reflect not signed in state
+            updateUIForSignedInUser(null); // Call this with null to indicate no user is signed in
             return;
         }
-
+    
         try {
             const response = await fetch('https://aces-nu.vercel.app/api/user', {
                 method: 'GET',
@@ -167,28 +166,45 @@
                     'Authorization': `Bearer ${token}`
                 }
             });
-
+    
             if (response.ok) {
                 const user = await response.json();
-                // Assume your API returns user info including game stats
-                updateUIForSignedInUser(user.username);
-                updateGameStats(user); // You'll need to implement this based on your game's UI logic
+                updateUIForSignedInUser(user.username); // Pass the username to update the UI
+                updateGameStats(user); // Assuming user object includes stats
             } else {
                 console.error('Failed to fetch user info');
+                updateUIForSignedInUser(null);
             }
         } catch (error) {
             console.error('Error fetching user info:', error);
+            updateUIForSignedInUser(null);
         }
     }
-
-    function updateGameStats(user) {
-        // Update game stats UI
-        document.getElementById("funds").textContent = user.funds;
-        document.getElementById("wins").textContent = user.wins;
-        document.getElementById("losses").textContent = user.losses;
-        document.getElementById("draws").textContent = user.draws;
+    
+    function updateUIForSignedInUser(username) {
+        if (username) {
+            document.getElementById('profileUsername').textContent = username;
+            document.getElementById('profileSection').style.display = 'flex';
+            document.getElementById('toggleLoginBtn').style.display = 'none';
+        } else {
+            document.getElementById('profileSection').style.display = 'none';
+            document.getElementById('toggleLoginBtn').style.display = 'block';
+        }
     }
-</script>
+    
+    function updateGameStats(user) {
+        document.getElementById("funds").textContent = user.funds || 0;
+        document.getElementById("wins").textContent = user.wins || 0;
+        document.getElementById("losses").textContent = user.losses || 0;
+        document.getElementById("draws").textContent = user.draws || 0;
+    }
+    
+    document.getElementById('signOutButton').addEventListener('click', function() {
+        localStorage.removeItem('jwt');
+        window.location.href = 'signin.html'; // Redirect to sign-in page on sign out
+    });
+    </script>
+    
   
 </body>
 </html>
