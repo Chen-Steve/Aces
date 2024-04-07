@@ -218,9 +218,7 @@ function payoutWin() {
     console.log(`Payout after update: Player Funds = ${BJgame.playerFunds}`);
 }
 
-function handleLoss() {
-    BJgame.updateFunds(-BJgame.currentBet);
-}
+//don't need handleloss function, its already implemented defacto
 
 function checkDoubleDownEligibility() {
     console.log("Checking double down eligibility. Player's cards:", You['cards'].length, "Player's funds:", BJgame.playerFunds, "Current Bet:", BJgame.currentBet);
@@ -288,7 +286,7 @@ function findwinner() {
     else {
         BJgame['losses']++;
         winner = Dealer;
-        handleLoss(); // Player loses the bet
+        //handleLoss(); // Player loses the bet
     }
     return winner;
 }
