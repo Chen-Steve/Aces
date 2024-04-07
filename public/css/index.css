@@ -196,7 +196,7 @@ body {
 /*---------------------SAVE BUTTONS---------------------*/
 #download-save-btn,
 #load-game-button,
-#save-score-btn {
+#save-game-btn {
   background-color: #405d27;
   color: #efefef;
   padding: 10px 10px;

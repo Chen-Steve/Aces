@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const toggleMusicButton = document.getElementById("toggleMusicBtn");
+  const saveButton = document.getElementById("save-game-btn");
 
   if (toggleMusicButton) {
     toggleMusicButton.addEventListener("click", toggleMusic);
@@ -7,8 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Music toggle button not found.");
   }
 
-  // Set up an interval to save the game state automatically every minute
-  setInterval(saveGameState, 180000); // 60000 milliseconds = 1 minute
+  if (saveButton) {
+    saveButton.addEventListener("click", saveGameState);
+  } else {
+    console.error("Save button not found.");
+  }
 });
 
 async function saveGameState() {
@@ -34,23 +38,24 @@ async function saveGameState() {
       },
       body: JSON.stringify(gameState),
     });
-    
+
     if (response.ok) {
       console.log('Game state saved to server:', gameState);
-      showSaveMessage(); // Optionally, show confirmation every minute or adjust according to UX needs.
+      showSaveMessage("Game state saved successfully!");
     } else {
       console.error('Failed to save game state to server. Response not OK.');
+      showSaveMessage("Failed to save game state.", "error");
     }
   } catch (e) {
     console.error('Failed to save game state to server:', e);
+    showSaveMessage("Failed to save game state.", "error");
   }
 }
 
-function showSaveMessage() {
+function showSaveMessage(messageText, messageType = "success") {
   const message = document.createElement("div");
-  message.textContent = "Game state automatically saved!";
-  message.classList.add("save-message");
-  message.style.color = "black";
+  message.textContent = messageText;
+  message.classList.add("save-message", messageType);
   document.body.appendChild(message);
   setTimeout(() => document.body.removeChild(message), 2000);
 }
