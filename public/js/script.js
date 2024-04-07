@@ -201,11 +201,11 @@ function updateGameMessage(message, color = "white") {
   messageEl.style.color = color;
 }
 
-const winSound = new Audio("sound_effects/cha-ching.mp3");
-const cheers = new Audio("sound_effects/cheer.mp3");
-const loseSound = new Audio("sound_effects/aww.mp3");
-const drawSound = new Audio("sound_effects/aww.mp3");
-const hitsound = new Audio("sound_effects/swish.mp3");
+const winSound = new Audio("/sound_effects/cha-ching.mp3");
+const cheers = new Audio("/sound_effects/cheer.mp3");
+const loseSound = new Audio("/sound_effects/aww.mp3");
+const drawSound = new Audio("/sound_effects/aww.mp3");
+const hitsound = new Audio("/sound_effects/swish.mp3");
 
 function displayCard(containerId, cardSymbol) {
   const container = document.getElementById(containerId);
