@@ -7,11 +7,6 @@ function setupEventListener(elementId, eventType, handler) {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  setupEventListener("toggleMusicBtn", "click", toggleMusic);
-  setupEventListener("save-game-btn", "click", saveGameState);
-});
-
 function toggleMusic() {
   const music = document.getElementById("bgMusic");
   if (!music) {
@@ -23,6 +18,16 @@ function toggleMusic() {
   } else {
     music.pause();
   }
+}
+
+function debounce(func, delay) {
+  let debounceTimer;
+  return function() {
+    const context = this;
+    const args = arguments;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => func.apply(context, args), delay);
+  };
 }
 
 async function saveGameState() {
@@ -61,6 +66,15 @@ async function saveGameState() {
     showSaveMessage("Failed to save game state.", "error");
   }
 }
+
+const debouncedSaveGameState = debounce(async () => {
+  await saveGameState();
+}, 1000);
+
+document.addEventListener("DOMContentLoaded", () => {
+  setupEventListener("toggleMusicBtn", "click", toggleMusic);
+  setupEventListener("save-game-btn", "click", debouncedSaveGameState);
+});
 
 function showSaveMessage(messageText, messageType = "success") {
   const message = document.createElement("div");
