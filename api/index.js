@@ -32,21 +32,39 @@ app.post('/api/signin', async (req, res) => {
 
 app.post('/api/signup', async (req, res) => {
   const { email, password } = req.body;
-  const hashedPassword = bcrypt.hashSync(password, 8);
-  const username = uniqueNamesGenerator({
-    dictionaries: [adjectives, colors, animals, names, starWars],
-    style: 'capital',
-    separator: ' ',
-    length: 2,
-  });
+  // Ensure both email and password are provided
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email and password are required' });
+  }
 
+  const hashedPassword = bcrypt.hashSync(password, 8);
   try {
-    const user = await prisma.user.create({
+    // Check if user already exists
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ error: 'User with this email already exists' });
+    }
+
+    const username = uniqueNamesGenerator({
+      dictionaries: [adjectives, colors, animals, names, starWars],
+      style: 'capital',
+      separator: ' ',
+      length: 2,
+    });
+
+    const newUser = await prisma.user.create({
       data: { email, password: hashedPassword, username },
     });
+
+    const token = jwt.sign(
+      { email: newUser.email, username: newUser.username },
+      JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+
     res.status(201).json({ user: newUser, token });
   } catch (error) {
-    res.status(400).json({ error: 'Unable to create user' });
+    res.status(500).json({ error: 'Failed to create user' });
   }
 });
 
