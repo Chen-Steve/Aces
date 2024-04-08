@@ -1,7 +1,7 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
-import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
+import { uniqueNamesGenerator, adjectives, colors, animals, names, starWars } from 'unique-names-generator';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_default_secret'; // Fallback secret for development
@@ -34,10 +34,10 @@ app.post('/api/signup', async (req, res) => {
   const { email, password } = req.body;
   const hashedPassword = bcrypt.hashSync(password, 8);
   const username = uniqueNamesGenerator({
-    dictionaries: [adjectives, colors, animals],
+    dictionaries: [adjectives, colors, animals, names, starWars],
     style: 'capital',
-    separator: '',
-    length: 1,
+    separator: ' ',
+    length: 2,
   });
 
   try {
