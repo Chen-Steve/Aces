@@ -44,7 +44,7 @@ app.post('/api/signup', async (req, res) => {
     const user = await prisma.user.create({
       data: { email, password: hashedPassword, username },
     });
-    res.status(201).json({ user });
+    res.status(201).json({ user: newUser, token });
   } catch (error) {
     res.status(400).json({ error: 'Unable to create user' });
   }
