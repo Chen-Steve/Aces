@@ -1,3 +1,27 @@
+function generateDeck() {
+  const suits = ['C', 'D', 'H', 'S'];
+  const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+  const deck = [];
+
+  suits.forEach(suit => {
+    ranks.forEach(rank => {
+      deck.push(rank + suit);
+    });
+  });
+
+  return deck;
+}
+
+function getCardValue(card) {
+  const rank = card.slice(0, -1);
+  if (rank === 'A') return [1, 11]; 
+  if (['J', 'Q', 'K'].includes(rank)) return 10; 
+  return parseInt(rank);
+}
+
+
+const initialDeck = generateDeck();
+
 let BJgame = {
   you: { scoreSpan: "#yourscore", div: "#your-box", score: 0, cards: [] },
   dealer: {
@@ -6,193 +30,25 @@ let BJgame = {
     score: 0,
     cards: [],
   },
-
-  cards: [
-    "2C",
-    "3C",
-    "4C",
-    "5C",
-    "6C",
-    "7C",
-    "8C",
-    "9C",
-    "10C",
-    "KC",
-    "QC",
-    "JC",
-    "AC",
-    "2D",
-    "3D",
-    "4D",
-    "5D",
-    "6D",
-    "7D",
-    "8D",
-    "9D",
-    "10D",
-    "KD",
-    "QD",
-    "JD",
-    "AD",
-    "2H",
-    "3H",
-    "4H",
-    "5H",
-    "6H",
-    "7H",
-    "8H",
-    "9H",
-    "10H",
-    "KH",
-    "QH",
-    "JH",
-    "AH",
-    "2S",
-    "3S",
-    "4S",
-    "5S",
-    "6S",
-    "7S",
-    "8S",
-    "9S",
-    "10S",
-    "KS",
-    "QS",
-    "JS",
-    "AS",
-  ],
-
-  cardsmap: {
-    "2C": 2,
-    "3C": 3,
-    "4C": 4,
-    "5C": 5,
-    "6C": 6,
-    "7C": 7,
-    "8C": 8,
-    "9C": 9,
-    "10C": 10,
-    KC: 10,
-    QC: 10,
-    JC: 10,
-    AC: [1, 11],
-    "2D": 2,
-    "3D": 3,
-    "4D": 4,
-    "5D": 5,
-    "6D": 6,
-    "7D": 7,
-    "8D": 8,
-    "9D": 9,
-    "10D": 10,
-    KD: 10,
-    QD: 10,
-    JD: 10,
-    AD: [1, 11],
-    "2H": 2,
-    "3H": 3,
-    "4H": 4,
-    "5H": 5,
-    "6H": 6,
-    "7H": 7,
-    "8H": 8,
-    "9H": 9,
-    "10H": 10,
-    KH: 10,
-    QH: 10,
-    JH: 10,
-    AH: [1, 11],
-    "2S": 2,
-    "3S": 3,
-    "4S": 4,
-    "5S": 5,
-    "6S": 6,
-    "7S": 7,
-    "8S": 8,
-    "9S": 9,
-    "10S": 10,
-    KS: 10,
-    QS: 10,
-    JS: 10,
-    AS: [1, 11],
-  },
-
+  cards: [...initialDeck],
   playerFunds: 1000,
   currentBet: 0,
-
   // Update player funds
   updateFunds: function (amount) {
     this.playerFunds += amount;
     // Update UI with new funds
     document.getElementById("funds").textContent = this.playerFunds;
   },
-
   wins: 0,
   losses: 0,
   draws: 0,
 };
 
 const cardSymbols = {
-  hearts: [
-    "2♥",
-    "3♥",
-    "4♥",
-    "5♥",
-    "6♥",
-    "7♥",
-    "8♥",
-    "9♥",
-    "10♥",
-    "J♥",
-    "Q♥",
-    "K♥",
-    "A♥",
-  ],
-  diamonds: [
-    "2♦",
-    "3♦",
-    "4♦",
-    "5♦",
-    "6♦",
-    "7♦",
-    "8♦",
-    "9♦",
-    "10♦",
-    "J♦",
-    "Q♦",
-    "K♦",
-    "A♦",
-  ],
-  clubs: [
-    "2♣",
-    "3♣",
-    "4♣",
-    "5♣",
-    "6♣",
-    "7♣",
-    "8♣",
-    "9♣",
-    "10♣",
-    "J♣",
-    "Q♣",
-    "K♣",
-    "A♣",
-  ],
-  spades: [
-    "2♠",
-    "3♠",
-    "4♠",
-    "5♠",
-    "6♠",
-    "7♠",
-    "8♠",
-    "9♠",
-    "10♠",
-    "J♠",
-    "Q♠",
-    "K♠",
-    "A♠",
-  ],
+  hearts: ["2♥","3♥","4♥","5♥","6♥","7♥","8♥","9♥","10♥","J♥","Q♥","K♥","A♥",],
+  diamonds: ["2♦","3♦","4♦","5♦","6♦","7♦","8♦","9♦","10♦","J♦","Q♦","K♦","A♦",],
+  clubs: ["2♣","3♣","4♣","5♣","6♣","7♣","8♣","9♣","10♣","J♣","Q♣","K♣","A♣",],
+  spades: ["2♠","3♠","4♠","5♠","6♠","7♠","8♠","9♠","10♠","J♠","Q♠","K♠","A♠",],
 };
 
 function updateGameMessage(message, color = "white") {
@@ -218,17 +74,14 @@ function displayHands() {
   // Clear previous card displays
   document.getElementById("your-box").innerHTML = "<h2>Your Hand</h2>";
   document.getElementById("dealer-box").innerHTML = "<h2>Dealer's Hand</h2>";
-
   // Display player's cards
   for (const card of You["cards"]) {
     displayCard("your-box", card);
   }
-
   // Display dealer's first card (hide the second card)
   displayCard("dealer-box", You["cards"][0]);
 }
 
-// Define shuffleDeck function
 function shuffleDeck(deck) {
   for (let i = deck.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -236,68 +89,13 @@ function shuffleDeck(deck) {
   }
 }
 
-// Define replenishDeck function
 function replenishDeck() {
-  if (BJgame["cards"].length < 10) {
-    // Threshold, e.g., 10 cards
-    BJgame["cards"] = [
-      "2C",
-      "3C",
-      "4C",
-      "5C",
-      "6C",
-      "7C",
-      "8C",
-      "9C",
-      "10C",
-      "JC",
-      "QC",
-      "KC",
-      "AC",
-      "2D",
-      "3D",
-      "4D",
-      "5D",
-      "6D",
-      "7D",
-      "8D",
-      "9D",
-      "10D",
-      "JD",
-      "QD",
-      "KD",
-      "AD",
-      "2H",
-      "3H",
-      "4H",
-      "5H",
-      "6H",
-      "7H",
-      "8H",
-      "9H",
-      "10H",
-      "JH",
-      "QH",
-      "KH",
-      "AH",
-      "2S",
-      "3S",
-      "4S",
-      "5S",
-      "6S",
-      "7S",
-      "8S",
-      "9S",
-      "10S",
-      "JS",
-      "QS",
-      "KS",
-      "AS",
-    ];
-    shuffleDeck(BJgame["cards"]);
+  if (BJgame.cards.length < 10) {
+    BJgame.cards = generateDeck();
+    shuffleDeck(BJgame.cards);
   }
 }
-// Function to initialize the deck with all cards
+
 function initializeDeck() {
   let deck = [];
   for (const suit of Object.keys(cardSymbols)) {
@@ -507,21 +305,14 @@ function doubleDown() {
 
 document.getElementById("doubleDown").addEventListener("click", doubleDown);
 
-function updateScore(currentCard, activePlayer) {
-  const rank = currentCard.slice(0, -1); // Extract the rank from the card symbol
-  if (rank === "A") {
-    // If adding 11 keeps the score under or equal to 21, use 11, otherwise use 1
-    if (activePlayer["score"] + 11 <= 21) {
-      activePlayer["score"] += 11;
-    } else {
-      activePlayer["score"] += 1;
-    }
-  } else if (["K", "Q", "J"].includes(rank)) {
-    // Face cards (King, Queen, Jack) are worth 10
-    activePlayer["score"] += 10;
+function updateScore(card, activePlayer) {
+  const value = getCardValue(card);
+  if (Array.isArray(value)) {
+    // Handle Ace's value dynamically
+    const bestScore = (activePlayer.score + 11 <= 21) ? 11 : 1;
+    activePlayer.score += bestScore;
   } else {
-    // Other cards are worth their face value
-    activePlayer["score"] += parseInt(rank);
+    activePlayer.score += value;
   }
   showScore(activePlayer);
 }
@@ -545,7 +336,6 @@ function findwinner() {
   } else {
     BJgame["losses"]++;
     winner = Dealer;
-    //handleLoss(); // Player loses the bet
   }
   return winner;
 }
