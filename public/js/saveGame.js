@@ -1,19 +1,29 @@
+function setupEventListener(elementId, eventType, handler) {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.addEventListener(eventType, handler);
+  } else {
+    console.error(`${elementId} not found.`);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  const toggleMusicButton = document.getElementById("toggleMusicBtn");
-  const saveButton = document.getElementById("save-game-btn");
-
-  if (toggleMusicButton) {
-    toggleMusicButton.addEventListener("click", toggleMusic);
-  } else {
-    console.error("Music toggle button not found.");
-  }
-
-  if (saveButton) {
-    saveButton.addEventListener("click", saveGameState);
-  } else {
-    console.error("Save button not found.");
-  }
+  setupEventListener("toggleMusicBtn", "click", toggleMusic);
+  setupEventListener("save-game-btn", "click", saveGameState);
 });
+
+function toggleMusic() {
+  const music = document.getElementById("bgMusic");
+  if (!music) {
+    console.error("Background music element not found.");
+    return;
+  }
+  if (music.paused) {
+    music.play().catch(e => console.error("Error playing music:", e));
+  } else {
+    music.pause();
+  }
+}
 
 async function saveGameState() {
   const gameState = {
@@ -58,9 +68,4 @@ function showSaveMessage(messageText, messageType = "success") {
   message.classList.add("save-message", messageType);
   document.body.appendChild(message);
   setTimeout(() => document.body.removeChild(message), 2000);
-}
-
-function toggleMusic() {
-  const music = document.getElementById("bgMusic");
-  music.paused ? music.play() : music.pause();
 }
