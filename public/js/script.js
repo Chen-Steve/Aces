@@ -30,6 +30,7 @@ let BJgame = {
     // Update UI with new funds
     document.getElementById("funds").textContent = this.playerFunds;
   },
+  hasPlayerHit: false,
   wins: 0,
   losses: 0,
   draws: 0,
@@ -53,6 +54,13 @@ const cheers = new Audio("sound_effects/cheer.mp3");
 const loseSound = new Audio("sound_effects/aww.mp3");
 const drawSound = new Audio("sound_effects/aww.mp3");
 const hitsound = new Audio("sound_effects/swish.mp3");
+
+document.getElementById('betAmount').addEventListener('input', function (e) {
+  var value = this.value;
+  if(value.includes('.') || !Number.isInteger(+value)){
+    this.value = value.split('.')[0];
+  }
+});
 
 function displayCard(containerId, cardSymbol) {
   const container = document.getElementById(containerId);
@@ -251,23 +259,14 @@ function payoutWin() {
 //don't need handleloss function, its already implemented defacto
 
 function checkDoubleDownEligibility() {
-  console.log(
-    "Checking double down eligibility. Player's cards:",
-    You["cards"].length,
-    "Player's funds:",
-    BJgame.playerFunds,
-    "Current Bet:",
-    BJgame.currentBet
-  );
   if (
     You["cards"].length === 2 &&
-    BJgame.playerFunds >= BJgame.currentBet * 2
+    BJgame.playerFunds >= BJgame.currentBet * 2 &&
+    !BJgame.hasPlayerHit // Only allow double down if the player hasn't hit yet
   ) {
     document.getElementById("doubleDown").disabled = false;
-    console.log("Double down enabled.");
   } else {
     document.getElementById("doubleDown").disabled = true;
-    console.log("Double down disabled.");
   }
 }
 
@@ -365,8 +364,9 @@ document.querySelector("#hit").addEventListener("click", BJhit);
 function BJhit() {
   if (Dealer["score"] === 0) {
     if (You["score"] < 21) {
+      BJgame.hasPlayerHit = true;
+      document.getElementById("doubleDown").disabled = true;
       drawCard(You);
-      // Disable "Double Down" only if more than two cards are now in the player's hand
       if (You["cards"].length > 2) {
         document.getElementById("doubleDown").disabled = true;
       }
@@ -396,7 +396,7 @@ function BJdeal() {
     Dealer["score"] = 0;
     You["cards"] = []; // Clear the player's cards array
     Dealer["cards"] = []; // Clear the dealer's cards array
-    // Reset command/message text
+    BJgame.hasPlayerHit = false; // Reset the flag when dealing a new hand
     document.querySelector("#command").textContent = "Let's Play";
     document.querySelector("#command").style.color = "black";
     // Reset betting UI for the next game
@@ -413,7 +413,6 @@ function BJstand() {
     updateGameMessage("You need to have at least two cards to stand.", "red");
     return; // Exit the function if the player has less than two cards
   }
-
   if (You["score"] <= 21) {
     while (Dealer["score"] < 16) {
       drawCard(Dealer);
