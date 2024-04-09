@@ -12,7 +12,7 @@ body {
   border: 2px solid #000000;
   border-radius: 10px;
   padding: 20px;
-  width: 320px;
+  width: 420px;
   margin: 0 auto;
   margin-top: 1rem;
   box-shadow: 0 0 10px rgba(83, 105, 142, 0.5);
@@ -480,4 +480,30 @@ strong {
   cursor: pointer;
   transition: background-color 0.2s ease-in-out, transform 0.2s ease;
   font-size: 0.8em;
+}
+
+#game-container {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-wrap: wrap; 
+  gap: 20px; 
+  max-width: 600px; 
+  margin: 0 auto;
+}
+
+.box h2 {
+  display: inline-block;
+  margin: 10px; 
+  padding: 0 5px; 
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  #game-container {
+      flex-direction: column; 
+  }
+  .box {
+      width: 100%; 
+  }
 }

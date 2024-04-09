@@ -1,15 +1,7 @@
 function generateDeck() {
   const suits = ['C', 'D', 'H', 'S'];
   const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-  const deck = [];
-
-  suits.forEach(suit => {
-    ranks.forEach(rank => {
-      deck.push(rank + suit);
-    });
-  });
-
-  return deck;
+  return suits.flatMap(suit => ranks.map(rank => `${rank}${suit}`));
 }
 
 function getCardValue(card) {
@@ -18,7 +10,6 @@ function getCardValue(card) {
   if (['J', 'Q', 'K'].includes(rank)) return 10; 
   return parseInt(rank);
 }
-
 
 const initialDeck = generateDeck();
 
