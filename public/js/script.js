@@ -62,23 +62,31 @@ document.getElementById('betAmount').addEventListener('input', function (e) {
   }
 });
 
-function displayCard(containerId, cardSymbol) {
-  const container = document.getElementById(containerId);
+
+function displayCard(containerId, cardSymbol, fragment) {
   const cardText = document.createElement("div");
   cardText.textContent = cardSymbol;
-  container.appendChild(cardText);
+  fragment.appendChild(cardText);
 }
 
+//MARK: displayHands
 function displayHands() {
-  // Clear previous card displays
-  document.getElementById("your-box").innerHTML = "<h2>Your Hand</h2>";
-  document.getElementById("dealer-box").innerHTML = "<h2>Dealer's Hand</h2>";
-  // Display player's cards
+  // Create document fragments to hold card displays
+  const yourBoxFragment = document.createDocumentFragment();
+  const dealerBoxFragment = document.createDocumentFragment();
+
+  // Create card elements and append them to the fragments
   for (const card of You["cards"]) {
-    displayCard("your-box", card);
+    const cardText = document.createElement("div");
+    cardText.textContent = getCardSymbol(card);
+    yourBoxFragment.appendChild(cardText);
   }
-  // Display dealer's first card (hide the second card)
-  displayCard("dealer-box", You["cards"][0]);
+
+  displayCard("dealer-box", You["cards"][0], dealerBoxFragment);
+
+  // Append the fragments to the DOM in a single operation
+  document.getElementById("your-box").appendChild(yourBoxFragment);
+  document.getElementById("dealer-box").appendChild(dealerBoxFragment);
 }
 
 function shuffleDeck(deck) {
@@ -201,13 +209,11 @@ function getCardSymbol(card) {
 }
 
 function showScore(activeplayer) {
-  if (activeplayer["score"] > 21) {
-    document.querySelector(activeplayer["scoreSpan"]).textContent = "BUST!";
-    document.querySelector(activeplayer["scoreSpan"]).style.color = "yellow";
-  } else {
-    document.querySelector(activeplayer["scoreSpan"]).textContent =
-      activeplayer["score"];
-  }
+  const scoreSpan = document.querySelector(activeplayer["scoreSpan"]);
+  const score = activeplayer["score"] > 21 ? "BUST!" : activeplayer["score"];
+  const color = activeplayer["score"] > 21 ? "yellow" : "inherit";
+  scoreSpan.textContent = score;
+  scoreSpan.style.color = color;
 }
 
 // Betting event listener
@@ -221,10 +227,8 @@ document.getElementById("placeBet").addEventListener("click", function () {
 });
 
 function dealInitialCards() {
-  // Draw two cards for the player
   drawCard(You);
   drawCard(You);
-  // Adjust the UI as needed (e.g., disable the "Double Down" button if the player's initial two cards don't meet the criteria)
   checkDoubleDownEligibility();
 }
 
@@ -255,8 +259,6 @@ function payoutWin() {
   BJgame.updateFunds(BJgame.currentBet * 2);
   console.log(`Payout after update: Player Funds = ${BJgame.playerFunds}`);
 }
-
-//don't need handleloss function, its already implemented defacto
 
 function checkDoubleDownEligibility() {
   if (
