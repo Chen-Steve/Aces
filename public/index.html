@@ -60,7 +60,6 @@
     </div>
     
     <div class="terminal-controls">
-        <!-- Betting UI -->
         <div id="betting-container">
             <span>Funds: <span id="funds">1000</span></span>
             <div>
@@ -70,7 +69,6 @@
             </div>
         </div>
 
-        <!-- Existing Game Controls --> 
         <button id="hit" class="btn" disabled>Hit</button>
         <button id="stand" class="btn" disabled>Stand</button>
         <button id="deal" class="btn">Deal</button>
@@ -88,15 +86,11 @@
         </div>
         <div id="game-message" class="game-message"></div>
         <button id="save-game-btn">Save Game</button>
-        <!-- <button id="save-score-btn">Save Stats</button>
-        <button id="download-save-btn">Download Save</button>
-        <input type="file" id="load-game-file"/>
-        <label for="load-game-file" class="btn" id="load-game-button">Load Save</label> -->
 
     </div>
+    <script src="js/script.js"></script>
     <script src="js/saveGame.js"></script>
     <script src="js/animations.js"></script>
-    <script src="js/script.js"></script>
 
     <div id="rules-tab" class="rules-tab">Game Rules</div>
     <div id="rules-content" class="rules-content">
@@ -112,7 +106,7 @@
         <ul>
             <li>Wins pay 1:1; meaning you win the same amount as your bet.</li>
             <li>Blackjack (an ace and a ten-value card as your first two cards) pays 3:2.</li>
-            <li>If you lose, you forfeit your bet amount.</li>
+            <li>If you lose, you forfeit your bet amount. Lose DOUBLE if doubled down</li>
             <li>A draw (or "push") returns your initial bet.</li>
 
         </ul>
